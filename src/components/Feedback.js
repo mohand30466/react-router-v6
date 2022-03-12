@@ -1,20 +1,24 @@
 import React, { useState} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import {useData} from './hookContext'
+
 
 export default function Supdetail() {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const [coment, setComent] = useState("");
+  const {db, SetUser}= useData()
+  const {coment, SetComents}= useData()
+  const [msg, setMsg]= useState('')
+  const [show, setShow]= useState('')
 
   console.log(state);
   const ComentsClick = (e) => {
     e.preventDefault();
+    SetComents(msg)
+    setShow(coment)
+    
 
-    let com = state.data;
-    if (com) {
-      com.note = coment;
-      console.log("yes i have data", com);
-    }
+
   };
 
   return (
@@ -32,10 +36,12 @@ export default function Supdetail() {
         <input
           placeholder="tel us what you think about our service"
           type="text"
-          onChange={(e) => setComent(e.target.value)}
+          onChange={(e) => setMsg(e.target.value)}
         />
         <button type="submit">Submit</button>
+        <h1>{db}</h1>
         <p>{coment}</p>
+        <p>{show}</p>
       </form>
     </>
   );
